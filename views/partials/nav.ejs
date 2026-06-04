@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #d8b4fe;">
+  <div class="container-fluid">
+    <img src="/images/Gemini_Generated_Image_f1qazlf1qazlf1qa.png" alt="" width="100" height="54"
+      class="d-inline-block align-text-top" href="#">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+      <!-- LEFT SIDE -->
+      <ul class="navbar-nav">
+        <li class="nav-item" style="margin-left: 10px;">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/signup">Create-Account</a>
+        </li>
+        <% if (!user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/signin">Sign-in</a>
+          </li>
+          <% } %>
+            <% if (user) { %>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/post">Post</a>
+              </li>
+              <% } %>
+                <li class="nav-item">
+                  <a class="nav-link" href="/users/about">About-Us</a>
+                </li>
+                <li class="nav-item">
+
+                </li>
+      </ul>
+
+      <!-- RIGHT SIDE -->
+      <% if (user) { %>
+        <ul class="navbar-nav ms-auto">
+
+          <img src="/images/image.png" alt="" class="rounded-circle" width="30" height="30" style="margin-right: 10px;">
+          <li class="nav-item dropdown" style="margin-right: 10px;">
+
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+              <% if (user) { %>
+                <%= user.fullName %>
+                  <% } else { %>
+                    You
+                    <% } %>
+            </a>
+            <% if (user) { %>
+              <ul class="dropdown-menu" style="background-color: #d8b4fe; border: 1px solid black;">
+                <li style="margin-right: 10px;">
+                  <a class="dropdown-item" href="/users/account" style="color: black; "
+                    onmouseover="this.style.backgroundColor='#c084fc'; this.style.color='white';"
+                    onmouseout="this.style.backgroundColor='#d8b4fe'; this.style.color='black';">
+                    Account
+                  </a>
+                  <a class="dropdown-item" href="/users/profile/<%= user ? user._id : '' %>" style="color: black;"
+                    onmouseover="this.style.backgroundColor='#c084fc'; this.style.color='white';"
+                    onmouseout="this.style.backgroundColor='#d8b4fe'; this.style.color='black';">
+                    Profile
+                  </a>
+                  <form action="/users/logout" method="post" style="margin: 0;">
+                    <button type="submit" class="dropdown-item"
+                      style="color: black; background-color: transparent; border: none; width: 100%; text-align: left;"
+                      onmouseover="this.style.backgroundColor='#c084fc'; this.style.color='white';"
+                      onmouseout="this.style.backgroundColor='transparent'; this.style.color='black';">
+                      Logout
+                    </button>
+                  </form>
+
+                </li>
+              </ul>
+              <% } %>
+          </li>
+        </ul>
+        <% } %>
+
+    </div>
+  </div>
+</nav>

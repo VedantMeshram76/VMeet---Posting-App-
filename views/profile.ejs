@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("partials/head") %>
+        <title>Vmeet | Profile</title>
+        <style>
+            :root {
+                --vmeet-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                --glass: rgba(255, 255, 255, 0.8);
+            }
+
+            body {
+                background-color: #f0f2f5;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .profile-header {
+                background: var(--vmeet-gradient);
+                height: 250px;
+                border-radius: 0 0 40px 40px;
+            }
+
+            .profile-card {
+                margin-top: -100px;
+                background: var(--glass);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 25px;
+            }
+
+            .profile-avatar {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border: 5px solid #fff;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-pills .nav-link {
+                color: #6c757d;
+                font-weight: 600;
+                border-radius: 10px;
+                transition: 0.3s;
+            }
+
+            .nav-pills .nav-link.active {
+                background: var(--vmeet-gradient) !important;
+                box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+            }
+
+            .post-card {
+                border-radius: 15px;
+                overflow: hidden;
+                transition: transform 0.3s ease;
+                cursor: pointer;
+                border: none;
+            }
+
+            .post-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .stats-box {
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 15px;
+                padding: 10px 20px;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include("partials/nav") %>
+
+        <!-- Top Gradient Header -->
+        <div class="profile-header w-100"></div>
+
+        <% if (profileUser && postCount !==undefined) { %>
+            <div class="container mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <!-- Main Profile Card -->
+                        <div class="profile-card shadow-sm p-4 p-md-5">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 text-center mb-4 mb-md-0">
+                                    <img src="<%= profileUser.profileImage %>" alt="User"
+                                        class="profile-avatar rounded-circle">
+                                </div>
+
+                                <div class="col-md-8 text-center text-md-start">
+                                    <div class="d-flex flex-column flex-md-row align-items-center gap-3 mb-3">
+                                        <h2 class="fw-bold m-0">
+                                            <%= profileUser.fullName %>
+                                        </h2>
+                                        <div class="d-flex gap-2">
+                                            <% if (currentUser && currentUser._id.toString()
+                                                !==profileUser._id.toString()) { %>
+                                                <% const isFollowing=profileUser.followedBy &&
+                                                    profileUser.followedBy.includes(currentUser._id); %>
+
+                                                    <button id="followBtn"
+                                                        class="btn <%= isFollowing ? 'btn-outline-lavender' : 'btn-lavender' %> px-4 rounded-pill fw-bold shadow-sm"
+                                                        onclick="toggleFollow('<%= profileUser._id %>')">
+                                                        <%= isFollowing ? 'Unfollow' : 'Follow' %>
+                                                    </button>
+                                                    <% } %>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center justify-content-md-start gap-4 mb-4">
+                                        <div class="stats-box text-center">
+                                            <h5 class="fw-bold m-0" id="postCount">
+                                                <%= postCount %>
+                                            </h5>
+                                            <small class="text-muted text-uppercase fw-bold"
+                                                style="font-size: 10px;">Posts</small>
+                                        </div>
+                                        <div class="stats-box text-center">
+                                            <h5 class="fw-bold m-0" id="followerCount">
+                                                <%= profileUser.followers %>
+                                            </h5>
+                                            <small class="text-muted text-uppercase fw-bold"
+                                                style="font-size: 10px;">Followers</small>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tabs Navigation -->
+                        <div class="mt-5">
+                            <ul class="nav nav-pills justify-content-center mb-4" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active px-4" data-bs-toggle="pill"
+                                        data-bs-target="#posts"><i class="bi bi-grid-3x3 me-2"></i>POSTS</button>
+                                </li>
+
+                            </ul>
+
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="posts">
+                                    <div class="row g-4">
+                                        <% if (posts && posts.length> 0) { %>
+                                            <% posts.forEach(post=> { %>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <div class="card post-card h-100">
+                                                        <img src="<%= post.post %>" class="card-img-top" alt="Post">
+                                                        <div class="card-body">
+                                                            <form action="/users/read_comments/<%= post._id %>"
+                                                                method="get">
+                                                                <button class="btn btn-outline-primary">View
+                                                                    Post</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+                                                    <% } else { %>
+                                                        <p class="text-center text-muted">
+                                                            No posts yet.
+                                                        </p>
+                                                        <% } %>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+
+
+                <script>
+                    async function toggleFollow(userId) {
+                        const followBtn = document.getElementById("followBtn");
+                        const followerCountElement = document.getElementById("followerCount");
+
+                        try {
+                            const response = await fetch(`/users/follow/${userId}`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            });
+
+                            if (!response.ok) {
+                                const errData = await response.json();
+                                alert(errData.error || "Something went wrong.");
+                                return;
+                            }
+
+                            const data = await response.json();
+
+                            // Dynamic text update
+                            followerCountElement.textContent = data.followers;
+
+                            // Fluid style mutations based on follow flag state
+                            if (data.isFollowing) {
+                                followBtn.textContent = "Unfollow";
+                                followBtn.classList.remove("btn-lavender");
+                                followBtn.classList.add("btn-outline-lavender");
+                            } else {
+                                followBtn.textContent = "Follow";
+                                followBtn.classList.remove("btn-outline-lavender");
+                                followBtn.classList.add("btn-lavender");
+                            }
+
+                        } catch (err) {
+                            console.error("Failed to process follow request:", err);
+                        }
+                    }
+                </script>
+
+                <%- include("partials/script") %>
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("partials/head") %>
+        <title>Document</title>
+</head>
+
+<body>
+    <%- include("partials/nav") %>
+    <!-- Custom CSS for V-meet Brand Colors & Glassmorphism -->
+<style>
+    :root {
+        --v-primary: #6B46C1;
+        --v-light: #F3E5F5;
+        --v-accent: #9F7AEA;
+    }
+
+    body {
+        background-color: #F8F9FA;
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 1.5rem;
+        transition: transform 0.2s ease;
+    }
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .btn-v-meet {
+        background-color: var(--v-primary);
+        color: white;
+        border-radius: 50px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border: none;
+    }
+
+    .btn-v-meet:hover {
+        background-color: var(--v-accent);
+        color: white;
+    }
+
+    .icon-circle {
+        width: 50px;
+        height: 50px;
+        background-color: var(--v-light);
+        color: var(--v-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+    }
+
+    .footer-link {
+        color: #4A5568;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .footer-link:hover {
+        color: var(--v-primary);
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="container py-5 my-4">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <span class="badge rounded-pill px-3 py-2 mb-3" style="background-color: var(--v-light); color: var(--v-primary);">ABOUT US</span>
+            <h1 class="display-4 fw-bold mb-0">Welcome to Vmeet</h1>
+            <p class="h3 fw-bold mb-4" style="color: var(--v-accent);">Share. Connect. Inspire.</p>
+            <p class="text-muted fs-5 mb-4">
+                Vmeet is a social platform built for creators, dreamers, and thinkers. Share your ideas, connect with like-minded people, and explore endless inspiration every day.
+            </p>
+           
+        </div>
+        <div class="col-lg-6 text-center mt-5 mt-lg-0">
+            <!-- Modern Illustration Placeholder -->
+            <img src="/images/SocialNetwork.png" alt="Community" class="img-fluid">
+        </div>
+    </div>
+</section>
+
+<!-- "Why Vmet?" Grid -->
+<section class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Why Vmeet?</h2>
+        <div style="width: 40px; height: 3px; background-color: var(--v-primary); margin: 8px auto;"></div>
+    </div>
+    <div class="row g-4 text-center">
+        <!-- Connect -->
+        <div class="col-md-3">
+            <div class="glass-card p-4 h-100 shadow-sm">
+               <div class="icon-circle">
+  <img src="/images/technology.png" alt="connect" width="30">
+</div>
+                <h5 class="fw-bold">Connect</h5>
+                <p class="small text-muted">Build connections with people who share your interests and passions.</p>
+            </div>
+        </div>
+        <!-- Create -->
+        <div class="col-md-3">
+            <div class="glass-card p-4 h-100 shadow-sm">
+                <div class="icon-circle"><img src="/images/edit.png" alt="Create" width="30"></div>
+                <h5 class="fw-bold">Create</h5>
+                <p class="small text-muted">Share your thoughts, ideas, and creativity with the community.</p>
+            </div>
+        </div>
+        <!-- Explore -->
+        <div class="col-md-3">
+            <div class="glass-card p-4 h-100 shadow-sm">
+                <div class="icon-circle"><img src="/images/binoculars.png" alt="Explore" width="30"></div>
+                <h5 class="fw-bold">Explore</h5>
+                <p class="small text-muted">Discover new perspectives and get inspired by amazing content.</p>
+            </div>
+        </div>
+        <!-- Safe & Secure -->
+        <div class="col-md-3">
+            <div class="glass-card p-4 h-100 shadow-sm">
+                <div class="icon-circle"><img src="/images/shield.png" alt="Safe & Secure" width="30"></div>
+                <h5 class="fw-bold">Safe & Secure</h5>
+                <p class="small text-muted">Your privacy and safety are our top priority at all times.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact & Support Section (Footer) -->
+<footer class="container pb-5">
+    <div class="glass-card p-4 shadow-sm border-0">
+        <div class="row align-items-center gy-4">
+            <!-- Contact -->
+            <div class="col-md-4 d-flex align-items-center gap-3">
+                <div class="icon-circle m-0 shadow-sm" style="background-color: var(--v-primary); color: white;">
+                    <img src="/images/operator.png" alt="Contact" width="30">
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">Contact Us</h6>
+                    <p class="mb-0 text-muted small">Have questions or feedback?</p>
+ <a href="mailto:luffymonkeyd9945@gmail.com" class="text-decoration-none fw-bold" style="color: var(--v-primary); font-size: 0.85rem;">contact@vpost.com</a>
+                </div>
+            </div>
+            <!-- Support -->
+            <div class="col-md-3 d-flex align-items-center gap-3 border-start-md">
+                <div class="icon-circle m-0 shadow-sm" style="background-color: var(--v-primary); color: white;">
+                    <img src="/images/heart-handshake.png" alt="Support" width="30">
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">Support</h6>
+                    <p class="mb-0 text-muted small">Need help? We're here.</p>
+                    <a href="mailto:luffymonkeyd9945@gmail.com" class="text-decoration-none fw-bold" style="color: var(--v-primary); font-size: 0.85rem;">support@vpost.com</a>
+                </div>
+            </div>
+            <!-- Links -->
+            <div class="col-md-5 d-flex justify-content-md-end gap-4 border-start-md">
+                <div class="text-start">
+                    <h6 class="fw-bold mb-2">Connect With Us</h6>
+                    <div class="d-flex gap-4">
+                        <a href="#" class="footer-link d-flex align-items-center gap-2">
+                            <i class="fab fa-github fa-lg"></i>
+                            <span><strong>GitHub</strong><br>github.com/vmest</span>
+                        </a>
+                        <a href="#" class="footer-link d-flex align-items-center gap-2">
+                            <i class="fab fa-linkedin fa-lg text-primary"></i>
+                            <span><strong>LinkedIn</strong><br>linkedin.com/vmest</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+   
+        <%- include("partials/script") %>
+</body>
+
+</html>

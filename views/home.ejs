@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("partials/head") %>
+    <title>Vmeet - Vibe Together</title>
+</head>
+
+<body>
+  <%- include("partials/nav") %>
+
+    <div class="container mt-3">
+      <!-- Success Alert -->
+      <% if (user) { %>
+        <div id="loginAlert" class="alert alert-success border-0 shadow-sm" role="alert"
+          style="background: rgba(212, 237, 218, 0.8); backdrop-filter: blur(4px);">
+          Login successful! Welcome back.
+        </div>
+        <% } %>
+
+          <!-- Google Fonts & Icons -->
+          <link href="https://fonts.googleapis.com/css2=family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+          <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+          <style>
+            body {
+              background: radial-gradient(circle at top right, #fdfcfd, #f3e8ff 40%, #e9d5ff 100%);
+              background-attachment: fixed;
+              font-family: 'Plus Jakarta Sans', sans-serif;
+              min-height: 100vh;
+              padding-bottom: 50px;
+            }
+
+            .feed-container {
+              max-width: 520px;
+              margin: 0 auto;
+              padding-top: 40px;
+            }
+
+            /* The Aesthetic Card */
+            .glass-card {
+              background: rgba(255, 255, 255, 0.7);
+              backdrop-filter: blur(12px);
+              -webkit-backdrop-filter: blur(12px);
+              border: 1px solid rgba(255, 255, 255, 0.6);
+              border-radius: 28px;
+              padding: 24px;
+              box-shadow: 0 10px 40px rgba(168, 85, 247, 0.06);
+              margin-bottom: 30px;
+              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+            .glass-card:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 20px 50px rgba(168, 85, 247, 0.12);
+              border: 1px solid rgba(168, 85, 247, 0.2);
+            }
+
+            /* User Header */
+            .profile-section {
+              display: flex;
+              align-items: center;
+              margin-bottom: 18px;
+            }
+
+            .avatar-container {
+              position: relative;
+              padding: 3px;
+              background: linear-gradient(135deg, #a855f7, #d8b4fe);
+              border-radius: 18px;
+              margin-right: 14px;
+            }
+
+            .avatar-box {
+              width: 44px;
+              height: 44px;
+              background: white;
+              border-radius: 15px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: 700;
+              color: #9333ea;
+            }
+
+            .username {
+              font-weight: 700;
+              color: #1f2937;
+              font-size: 1rem;
+              display: block;
+              line-height: 1.2;
+            }
+
+            .post-time {
+              font-size: 0.75rem;
+              color: #9ca3af;
+              font-weight: 500;
+            }
+
+            /* Content Styling */
+            .post-content {
+              font-size: 1.05rem;
+              color: #374151;
+              line-height: 1.6;
+              margin-bottom: 16px;
+            }
+
+            .media-container {
+              border-radius: 22px;
+              overflow: hidden;
+              position: relative;
+              box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            }
+
+            .post-img {
+              width: 100%;
+              transition: transform 0.8s ease;
+            }
+
+            .glass-card:hover .post-img {
+              transform: scale(1.05);
+            }
+
+            /* Interaction Buttons */
+            .action-row {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-top: 20px;
+            }
+
+            .btn-pill {
+              background: rgba(168, 85, 247, 0.05);
+              border: 1px solid transparent;
+              padding: 10px 18px;
+              border-radius: 50px;
+              color: #6b7280;
+              font-size: 0.85rem;
+              font-weight: 600;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              transition: all 0.3s ease;
+              text-decoration: none !important;
+            }
+
+            .btn-pill:hover {
+              background: #a855f7;
+              color: white;
+              box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            }
+
+            /* Lavender Theme Overrides for Landing Page Buttons */
+            .btn-lavender {
+              background: #a855f7;
+              color: white;
+              border-radius: 50px;
+              transition: all 0.3s ease;
+            }
+
+            .btn-lavender:hover {
+              background: #9333ea;
+              color: white;
+              box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            }
+
+            .btn-outline-lavender {
+              border: 2px solid #a855f7;
+              color: #a855f7;
+              border-radius: 50px;
+              font-weight: 600;
+              transition: all 0.3s ease;
+            }
+
+            .btn-outline-lavender:hover {
+              background: rgba(168, 85, 247, 0.1);
+              color: #9333ea;
+              border-color: #9333ea;
+            }
+
+            .feature-icon {
+              font-size: 1.75rem;
+              color: #a855f7;
+              margin-bottom: 10px;
+            }
+
+            /* Quick Comment Input */
+            .comment-input-area {
+              margin-top: 15px;
+              background: rgba(255, 255, 255, 0.5);
+              border-radius: 15px;
+              padding: 10px 15px;
+              display: flex;
+              align-items: center;
+              border: 1px solid rgba(168, 85, 247, 0.1);
+            }
+
+            .text-purple {
+              color: #9d7cfd !important;
+            }
+
+            .comment-input-area input {
+              border: none;
+              background: transparent;
+              font-size: 0.85rem;
+              width: 100%;
+              outline: none;
+            }
+          </style>
+
+          <!-- Content Router based on Auth State -->
+          <% if (user) { %>
+            <!-- LOGGED IN VIEW: Feed -->
+            <div class="feed-container">
+              <% if (posts && posts.length> 0) { %>
+                <% posts.forEach((post)=> { %>
+                  <div class="glass-card">
+                    <!-- Header -->
+                    <div class="profile-section">
+                      <div class="avatar-container">
+                        <a href="/users/profile/<%= post.user?._id %>">
+                          <div class="avatar-box">
+                            <%= post.user?.fullName ? post.user.fullName.charAt(0).toUpperCase() : '?' %>
+                          </div>
+                        </a>
+                      </div>
+                      <div>
+                        <span class="username">
+                          <%= post.user?.fullName %>
+                        </span>
+                        <span class="post-time">
+                          Posted at <span style="color: #a855f7;">
+                            <%= new Date(post.createdAt).toLocaleTimeString([], {hour: '2-digit' , minute:'2-digit'}) %>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="post-content">
+                      <%= post.content %>
+                    </div>
+
+                    <!-- Media Image -->
+                    <% if (post.post) { %>
+                      <div class="media-container mb-3">
+                        <img src="<%= post.post %>" class="post-img" alt="Creative Content">
+                      </div>
+                      <% } %>
+
+                        <!-- Interaction Row -->
+                        <div class="action-row">
+                          <a href="javascript:void(0)" class="btn-pill" onclick="toggleLike('<%= post._id %>')">
+                            <i id="like-icon-<%= post._id %>"
+                              class="<%= (user && post.likedBy && post.likedBy.includes(user._id)) ? 'fa-solid text-danger' : 'fa-regular' %> fa-heart"></i>
+                            <span id="like-count-<%= post._id %>">
+                              <%= post.likes %>
+                            </span>
+                          </a>
+
+                          <a href="/users/read_comments/<%= post._id %>" class="btn-pill">
+                            <i class="fa-regular fa-comment-dots"></i>
+                            <span>Read Comments</span>
+                          </a>
+                        </div>
+
+                        <!-- Quick Comment Section -->
+                        <form action="/users/comment/<%= post._id %>" method="POST">
+                          <div class="comment-input-area">
+                            <input type="text" name="content" placeholder="Write a kind comment..." required>
+                            <button type="submit" class="btn text-purple p-0 ms-2"
+                              style="background: transparent; border: none; font-size: 1.2rem;">
+                              <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                          </div>
+                        </form>
+                  </div>
+                  <% }) %>
+                    <% } else { %>
+                      <div class="glass-card text-center py-5">
+                        <div class="mb-3" style="font-size: 2.5rem; opacity: 0.3;">🛸</div>
+                        <h5 class="text-muted">Silence in the galaxy...</h5>
+                        <p class="small text-muted">Be the first to break the ice!</p>
+                      </div>
+                      <% } %>
+            </div>
+
+            <% } else { %>
+              <!-- LOGGED OUT VIEW: Elegant Landing Page -->
+              <div class="row align-items-center justify-content-center g-5 py-5" style="min-height: 75vh;">
+                <!-- Left Hero Section -->
+                <div class="col-lg-6 text-center text-lg-start">
+                  <h1 class="display-4 fw-bold lh-sm mb-3">
+                    A space to <span style="color: #a855f7;">connect</span>, post, and vibe together.
+                  </h1>
+                  <p class="lead text-muted mb-4">
+                    Vmeet is a modern, minimal social platform built for creators, thinkers, and communities. Share your
+                    daily moments, engage with discussions, and find your circle.
+                  </p>
+                  <div class="d-flex justify-content-center justify-content-lg-start gap-3">
+                  
+                    <a href="/users/signup" class="btn btn-outline-lavender btn-lg px-4 fs-6">Let's Get Started</a>
+                  </div>
+                </div>
+
+                <!-- Right Feature Grid Box -->
+                <div class="col-lg-6 col-md-10">
+                  <div class="glass-card p-5 mb-0">
+                    <h3 class="fw-bold mb-4 text-center">Why join Vmeet?</h3>
+                    <div class="row g-4">
+                      <div class="col-sm-6 text-center text-sm-start">
+                        <div class="feature-icon"><i class="bi bi-chat-heart"></i></div>
+                        <h5 class="fw-bold">Interactive Feeds</h5>
+                        <p class="text-muted small">Like, comment, and dynamically engage with stories that matter to
+                          you.</p>
+                      </div>
+                      <div class="col-sm-6 text-center text-sm-start">
+                        <div class="feature-icon"><i class="bi bi-person-plus"></i></div>
+                        <h5 class="fw-bold">Grow Your Network</h5>
+                        <p class="text-muted small">Follow other users, build your audience, and stay updated with
+                          customized feeds.</p>
+                      </div>
+                      <div class="col-sm-6 text-center text-sm-start">
+                        <div class="feature-icon"><i class="fa-regular fa-pen-to-square"></i></div>
+                        <h5 class="fw-bold text-dark">Express Yourself</h5>
+                        <p class="text-muted small mb-0">Share your thoughts, upload media, and publish stunning posts
+                          with ease.</p>
+                      </div>
+                      <div class="col-sm-6 text-center text-sm-start">
+                        <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                        <h5 class="fw-bold">Clean Experience</h5>
+                        <p class="text-muted small">Enjoy a distraction-free, fluid glassmorphism design that looks
+                          beautiful on any screen.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% } %>
+    </div>
+
+    <script>
+      // Automatically fade out success alert
+      setTimeout(() => {
+        const alertBox = document.getElementById("loginAlert");
+        if (alertBox) {
+          alertBox.style.transition = "opacity 0.5s ease";
+          alertBox.style.opacity = "0";
+          setTimeout(() => alertBox.remove(), 500);
+        }
+      }, 2500);
+
+      // Asynchronous Like Toggle Mechanism
+      async function toggleLike(postId) {
+        try {
+          const response = await fetch(`/users/like/${postId}`, { method: "POST" });
+          if (!response.ok) return;
+
+          const data = await response.json();
+          const likeIcon = document.getElementById(`like-icon-${postId}`);
+          const likeCount = document.getElementById(`like-count-${postId}`);
+
+          likeCount.textContent = data.likes;
+          if (data.liked) {
+            likeIcon.className = "fa-solid fa-heart text-danger";
+          } else {
+            likeIcon.className = "fa-regular fa-heart";
+          }
+        } catch (err) {
+          console.error("Error toggling like request: ", err);
+        }
+      }
+    </script>
+
+    <%- include("partials/script") %>
+</body>
+
+</html>
